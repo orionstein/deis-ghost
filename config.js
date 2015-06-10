@@ -11,15 +11,15 @@ config = {
     // When running Ghost in the wild, use the production environment.
     // Configure your URL and mail settings here
     production: {
-        url: 'http://notsafeforproduction.com',
+        url: 'https://www.notsafeforproduction.com',
         mail: {},
         database: {
           client: 'postgres',
           connection: {
-            host: 'deis-1.orionfree.com',
-            user: 'ghostblog',
-            password: 'K4l4d1n!',
-            database: 'ghostblog',
+            host: process.env.PG_URL,
+            user: process.env.PG_USER,
+            password: process.env.PG_PASSWORD,
+            database: process.env.PG_DB,
             port: '5432'
           },
         },
