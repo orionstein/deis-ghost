@@ -14,7 +14,7 @@ ADD config.js /tmp/config.js
 
 RUN \
   apt-get update && \
-  apt-get install unzip
+  apt-get install -y unzip git
 
 RUN \
   cd /tmp && \
@@ -25,6 +25,10 @@ RUN \
   npm install --production && \
   sed 's/127.0.0.1/0.0.0.0/' /tmp/config.js > /ghost/config.js && \
   useradd ghost --home /ghost
+
+RUN \
+  cd /ghost/content/themes
+  git clone https://github.com/epistrephein/Steam.git
 
 # Add files.
 ADD start.bash /ghost-start
