@@ -11,14 +11,17 @@ config = {
     // When running Ghost in the wild, use the production environment.
     // Configure your URL and mail settings here
     production: {
-        url: 'http://my-ghost-blog.com',
+        url: 'http://notsafeforproduction.com',
         mail: {},
         database: {
-            client: 'sqlite3',
-            connection: {
-                filename: path.join(__dirname, '/content/data/ghost.db')
-            },
-            debug: false
+          client: 'postgres',
+          connection: {
+            host: 'deis-1.orionfree.com',
+            user: 'ghostblog',
+            password: 'K4l4d1n!',
+            database: 'ghostblog',
+            port: '5432'
+          },
         },
 
         server: {

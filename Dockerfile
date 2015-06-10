@@ -10,7 +10,7 @@ FROM node:latest
 # Install Ghost
 #
 
-ADD config.example.js /tmp/config.example.js
+ADD config.js /tmp/config.js
 
 RUN \
   apt-get update && \
