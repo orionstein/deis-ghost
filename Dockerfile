@@ -27,7 +27,7 @@ RUN \
   useradd ghost --home /ghost
 
 RUN \
-  cd /ghost/content/themes
+  cd /ghost/content/themes && \
   git clone https://github.com/epistrephein/Steam.git
 
 # Add files.
