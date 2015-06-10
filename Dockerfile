@@ -5,9 +5,17 @@
 #
 
 # Pull base image.
-FROM dockerfile/nodejs
+FROM node:latest
 
 # Install Ghost
+#
+
+ADD config.example.js /tmp/config.example.js
+
+RUN \
+  apt-get update && \
+  apt-get install unzip
+
 RUN \
   cd /tmp && \
   wget https://ghost.org/zip/ghost-latest.zip && \
@@ -15,7 +23,7 @@ RUN \
   rm -f ghost-latest.zip && \
   cd /ghost && \
   npm install --production && \
-  sed 's/127.0.0.1/0.0.0.0/' /ghost/config.example.js > /ghost/config.js && \
+  sed 's/127.0.0.1/0.0.0.0/' /tmp/config.example.js > /ghost/config.js && \
   useradd ghost --home /ghost
 
 # Add files.
