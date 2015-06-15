@@ -73,6 +73,8 @@ ADD start.bash /ghost-start
 # Set environment variables.
 ENV NODE_ENV production
 
+ADD http://etcd.orionfree.com:4001/v2/keys/announce/services/postgreql5432 /ghost/dbetcd.json
+
 VOLUME ["/data", "/ghost-override"]
 
 # Define working directory.

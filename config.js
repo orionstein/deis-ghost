@@ -6,7 +6,11 @@
 var path = require('path'),
     config;
 
+var db_obj = require('./dbetcd.json');
+
 config = {
+
+
     // ### Production
     // When running Ghost in the wild, use the production environment.
     // Configure your URL and mail settings here
@@ -16,7 +20,7 @@ config = {
         database: {
           client: 'postgres',
           connection: {
-            host: process.env.PG_URL,
+            host: db_obj.node.value,
             user: process.env.PG_USER,
             password: process.env.PG_PASSWORD,
             database: process.env.PG_DB,
