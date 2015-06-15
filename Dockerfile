@@ -68,6 +68,7 @@ RUN sudo su && sed 's/127.0.0.1/0.0.0.0/' /tmp/config.js > /ghost/config.js \
     && git clone https://github.com/epistrephein/Steam.git
 
 ADD include/* /ghost/content/themes/Steam/
+ADD include/partials/* /ghost/content/themes/Steam/partials/
 
 # Add files.
 ADD start.bash /ghost-start
