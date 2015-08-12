@@ -58,7 +58,9 @@ RUN cd /tmp \
     && sudo unzip ghost-latest.zip -d /ghost \
     && rm -f ghost-latest.zip \
     && cd /ghost \
-    && sudo npm install --production
+    && sudo npm install --production \
+    && sudo npm install ghost-s3-storage \
+    && sudo mkdir -p /ghost/content/storage/ghost-s3
 
 USER root
 
@@ -66,6 +68,8 @@ RUN sudo su && sed 's/127.0.0.1/0.0.0.0/' /tmp/config.js > /ghost/config.js \
     && sudo adduser ghost --disabled-password --home /ghost \
     && cd /ghost/content/themes \
     && git clone https://github.com/epistrephein/Steam.git
+
+ADD index.js /ghost/content/storage/ghost-s3/
 
 ADD include/* /ghost/content/themes/Steam/
 ADD include/partials/* /ghost/content/themes/Steam/partials/
@@ -75,8 +79,6 @@ ADD start.bash /ghost-start
 
 # Set environment variables.
 ENV NODE_ENV production
-
-ADD http://etcd.orionfree.com:4001/v2/keys/announce/services/postgresql5432 /ghost/dbetcd.json
 
 VOLUME ["/data", "/ghost-override"]
 
