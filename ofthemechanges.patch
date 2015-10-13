@@ -1,7 +1,7 @@
 From ec9f6f0af1911b29a2725f3b46faa748680e117f Mon Sep 17 00:00:00 2001
 From: orion <orion@vagrant.home>
 Date: Mon, 12 Oct 2015 19:10:50 -0700
-Subject: [PATCH] Updating for frontend changes
+Subject: [PATCH 1/2] Updating for frontend changes
 
 ---
  assets/css/screen.css         |  2 +-
@@ -169,6 +169,65 @@ index 339347d..8211d8d 100644
          {{!> comments-facebook}}
          {{!> comments-google-plus}}
  
+-- 
+1.9.1
+
+
+From 9802084f244469a951bdc9d04595f374050ed48f Mon Sep 17 00:00:00 2001
+From: orion <orion@vagrant.home>
+Date: Mon, 12 Oct 2015 19:42:38 -0700
+Subject: [PATCH 2/2] Steam changes
+
+---
+ assets/js/bind-polyfill.js | 23 +++++++++++++++++++++++
+ default.hbs                |  4 ++--
+ 2 files changed, 25 insertions(+), 2 deletions(-)
+ create mode 100644 assets/js/bind-polyfill.js
+
+diff --git a/assets/js/bind-polyfill.js b/assets/js/bind-polyfill.js
+new file mode 100644
+index 0000000..a4fb9f8
+--- /dev/null
++++ b/assets/js/bind-polyfill.js
+@@ -0,0 +1,23 @@
++if (!Function.prototype.bind) {
++  Function.prototype.bind = function(oThis) {
++    if (typeof this !== "function") {
++      // closest thing possible to the ECMAScript 5 internal IsCallable function
++      throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
++    }
++
++    var aArgs = Array.prototype.slice.call(arguments, 1),
++      fToBind = this,
++      fNOP = function() {},
++      fBound = function() {
++        return fToBind.apply(this instanceof fNOP && oThis
++          ? this
++          : oThis,
++          aArgs.concat(Array.prototype.slice.call(arguments)));
++      };
++
++    fNOP.prototype = this.prototype;
++    fBound.prototype = new fNOP();
++
++    return fBound;
++  };
++}
+diff --git a/default.hbs b/default.hbs
+index 35839ee..9d87075 100644
+--- a/default.hbs
++++ b/default.hbs
+@@ -61,8 +61,8 @@
+     {{ghost_foot}}
+ 
+     <script src="{{asset "js/index.js"}}"></script>
+-    <script src="{{asset "js//bind-polyfill.min.js"}}"></script>
+-    <script src="{{asset "js/smooth-scroll.min.js"}}"></script>
++    <script src="{{asset "js/bind-polyfill.js"}}"></script>
++    <script src="//cdnjs.cloudflare.com/ajax/libs/smooth-scroll/7.0.2/js/smooth-scroll.min.js"></script>
+     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>
+ 
+     <script>
 -- 
 1.9.1
 
