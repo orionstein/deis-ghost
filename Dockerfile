@@ -5,11 +5,6 @@ FROM tatsushid/tinycore:6.3-x86_64
 RUN tce-load -wic gnupg curl curl-dev expat2 \
     && rm -rf /tmp/tce/optional/*
 
-# verify gpg and sha256: http://nodejs.org/dist/v0.10.30/SHASUMS256.txt.asc
-# gpg: aka "Timothy J Fontaine (Work) <tj.fontaine@joyent.com>"
-# gpg: aka "Julien Gilli <jgilli@fastmail.fm>"
-RUN sudo gpg2 --keyserver pool.sks-keyservers.net --recv-keys 7937DFD2AB06298B2293C3187D33FF9D0246406D 114F43EE0176B71C7BC219DD50A3051F888C628D
-
 ENV NODE_VERSION 4.1.1
 ENV NPM_VERSION 3.3.5
 
@@ -19,6 +14,7 @@ ENV PYTHON_PIP_VERSION 7.0.1
 
 RUN tce-load -wic \
         bzip2-dev \
+        curl \
         flex \
         file \
         gcc \
@@ -40,6 +36,9 @@ RUN tce-load -wic \
         ftgl-dev \
         xz \
         xorg-proto \
+        zlib_base \
+        zlib_base-dev \
+        zlib \
     && sudo ln -s /usr/local/bin/file /usr/bin/file \
     && cd /tmp \
     && curl -SL "https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tar.xz" -o python.tar.xz \
@@ -140,6 +139,7 @@ RUN sudo npm install -g npm@"$NPM_VERSION" \
     && sudo npm install -g node-gyp \
     && sudo npm install -g sqlite3 \
     && sudo npm install -g grunt-cli \
+    && sudo npm install -g grunt \
     && sudo npm cache clear 
 
 RUN sudo git clone git://github.com/tryghost/ghost.git /ghost
@@ -151,13 +151,16 @@ RUN cd /ghost \
     && sudo git apply -v offixbuild.patch \
     && sudo npm install \
     && sudo npm install ghost-s3-storage \
+    && sudo npm install grunt \
     && sudo mkdir -p /ghost/content/storage/ghost-s3
+
+RUN cd /ghost \
+    && sudo grunt init \
+    && sudo grunt prod
 
 USER root
 
 RUN sudo su && sed 's/127.0.0.1/0.0.0.0/' /tmp/config.js > /ghost/config.js \
-    && grunt init \
-    && grunt prod \
     && sudo adduser ghost --disabled-password --home /ghost \
     && cd /ghost/content/themes \
     && git clone https://github.com/epistrephein/Steam.git
