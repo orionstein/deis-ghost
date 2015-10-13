@@ -1,0 +1,174 @@
+From ec9f6f0af1911b29a2725f3b46faa748680e117f Mon Sep 17 00:00:00 2001
+From: orion <orion@vagrant.home>
+Date: Mon, 12 Oct 2015 19:10:50 -0700
+Subject: [PATCH] Updating for frontend changes
+
+---
+ assets/css/screen.css         |  2 +-
+ default.hbs                   | 20 ++++++++++----------
+ page.hbs                      |  2 +-
+ partials/comments-disqus.hbs  |  4 ++--
+ partials/footer-author.hbs    |  2 +-
+ partials/footer-social.hbs    |  4 ++--
+ partials/google-analytics.hbs |  2 +-
+ post.hbs                      |  2 +-
+ 8 files changed, 19 insertions(+), 19 deletions(-)
+
+diff --git a/assets/css/screen.css b/assets/css/screen.css
+index b9dbef3..02ac3b6 100644
+--- a/assets/css/screen.css
++++ b/assets/css/screen.css
+@@ -3,7 +3,7 @@
+ /* === Core Styles === */
+ body {
+   background-color: #ffffff;
+-  color: #596364; /* darker color */
++  color: #000000; /* darker color */
+   font-size: 15px;
+   font-weight: 100;
+   line-height: 1.6em;
+diff --git a/default.hbs b/default.hbs
+index 1639b98..35839ee 100644
+--- a/default.hbs
++++ b/default.hbs
+@@ -18,7 +18,7 @@
+ 
+     {{> favicon-appletouchicon}}
+ 
+-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
++    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/2.1.2/normalize.min.css">
+ 
+     {{> theme-green}}
+     {{!> theme-blue}}
+@@ -26,15 +26,16 @@
+     {{!> theme-orange}}
+     {{!> theme-customcolor}}
+     
+-    {{!> meta}}
+-    {{!> google-analytics}}
++    {{> meta}}
+ 
+     <link rel="stylesheet" href="{{asset "css/screen.css"}}">
+-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/styles/default.min.css">
++    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/styles/default.min.css">
+     <link rel="stylesheet" href="{{asset "css/github.css"}}">
+ 
+     {{#if pagination.next}}<link href="{{page_url pagination.next}}" rel="prefetch">{{/if}}
+ 
++    {{> google-analytics}}
++
+     {{ghost_head}}
+ </head>
+ <body class="{{body_class}}">
+@@ -44,7 +45,7 @@
+         <h1 class="blog-subtitle">{{@blog.description}}</h1>
+     </header>
+ 
+-    {{!navigation}}
++    {{navigation}}
+ 
+     {{{body}}}
+ 
+@@ -52,18 +53,17 @@
+         <div class="inner">
+             {{> footer-social}}
+             {{> footer-author}}
+-            <section class="copyright">&copy; {{date format="YYYY"}} <a href="{{@blog.url}}">{{@blog.title}}</a>. All rights reserved</section>
++            <section class="copyright">&copy; {{date format="YYYY"}} <a href="/">{{@blog.title}}</a>. All rights reserved</section>
+             <section><a href="https://github.com/epistrephein/Steam">Steam theme</a> for <a class="icon-ghost" href="http://ghost.org/"><span class="hidden">Ghost</span></a> by Tommaso Barbato</section>
+         </div>
+     </footer>
+ 
+     {{ghost_foot}}
+ 
+-    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+     <script src="{{asset "js/index.js"}}"></script>
+-    
+-    <script src="//cdnjs.cloudflare.com/ajax/libs/smooth-scroll/7.1.1/js/smooth-scroll.js"></script>
+-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
++    <script src="{{asset "js//bind-polyfill.min.js"}}"></script>
++    <script src="{{asset "js/smooth-scroll.min.js"}}"></script>
++    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.3/highlight.min.js"></script>
+ 
+     <script>
+         smoothScroll.init({
+diff --git a/page.hbs b/page.hbs
+index 06e139b..3e53ab9 100644
+--- a/page.hbs
++++ b/page.hbs
+@@ -16,7 +16,7 @@
+ 
+     {{/post}}
+ 
+-    {{!> comments-disqus}}
++    {{> comments-disqus}}
+     {{!> comments-facebook}}
+     {{!> comments-google-plus}}
+ 
+diff --git a/partials/comments-disqus.hbs b/partials/comments-disqus.hbs
+index 5b9ce3d..12e3e59 100644
+--- a/partials/comments-disqus.hbs
++++ b/partials/comments-disqus.hbs
+@@ -1,6 +1,6 @@
+ <div id="disqus_thread">
+     <script type="text/javascript">
+-        var disqus_shortname = 'YOUR_DISQUS_ID';
++        var disqus_shortname = 'nsfp';
+         var disqus_identifier = '{{post.id}}';
+ 
+         (function() {
+@@ -11,4 +11,4 @@
+     </script>
+     <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+     <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+-</div>
+\ No newline at end of file
++</div>
+diff --git a/partials/footer-author.hbs b/partials/footer-author.hbs
+index c3516dd..d9ebd78 100644
+--- a/partials/footer-author.hbs
++++ b/partials/footer-author.hbs
+@@ -1 +1 @@
+-<section class="bloginfo">A blog by <a href="mailto:author@example.com">Author Name</a></section>
++<section class="bloginfo">A blog by <a href="mailto:orionstein@gmail.com">Orion Free</a></section>
+diff --git a/partials/footer-social.hbs b/partials/footer-social.hbs
+index b9ff35c..6bdc7c6 100644
+--- a/partials/footer-social.hbs
++++ b/partials/footer-social.hbs
+@@ -1,5 +1,5 @@
+ <section class="footer-social">
+-    <a href="http://twitter.com/username" target="_blank" title="Twitter"><i class="fa fa-2x fa-fw fa-twitter"></i> <span class="hidden">Twitter</span></a>&nbsp;
+-    <a href="https://github.com/username" target="_blank" title="GitHub"><i class="fa fa-2x fa-fw fa-github"></i> <span class="hidden">GitHub</span></a>&nbsp;
++    <a href="http://twitter.com/orionstein" target="_blank" title="Twitter"><i class="fa fa-2x fa-fw fa-twitter"></i> <span class="hidden">Twitter</span></a>&nbsp;
++    <a href="https://github.com/orionstein" target="_blank" title="GitHub"><i class="fa fa-2x fa-fw fa-github"></i> <span class="hidden">GitHub</span></a>&nbsp;
+     <a href="{{@blog.url}}/rss/" target="_blank" title="RSS"><i class="fa fa-2x fa-fw fa-rss"></i> <span class="hidden">RSS</span></a>
+ </section>
+diff --git a/partials/google-analytics.hbs b/partials/google-analytics.hbs
+index 4726c10..50bbf26 100644
+--- a/partials/google-analytics.hbs
++++ b/partials/google-analytics.hbs
+@@ -4,7 +4,7 @@
+   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ 
+-  ga('create', 'YOUR_TRACKING_CODE', 'auto');
++  ga('create', 'UA-60818610-1', 'auto');
+   ga('send', 'pageview');
+ 
+ </script>
+diff --git a/post.hbs b/post.hbs
+index 339347d..8211d8d 100644
+--- a/post.hbs
++++ b/post.hbs
+@@ -42,7 +42,7 @@
+ 
+         {{/post}}
+ 
+-        {{!> comments-disqus}}
++        {{> comments-disqus}}
+         {{!> comments-facebook}}
+         {{!> comments-google-plus}}
+ 
+-- 
+1.9.1
+

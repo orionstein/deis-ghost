@@ -165,11 +165,12 @@ RUN sudo su && sed 's/127.0.0.1/0.0.0.0/' /tmp/config.js > /ghost/config.js \
     && cd /ghost/content/themes \
     && git clone https://github.com/epistrephein/Steam.git
 
-ADD index.js /ghost/content/storage/ghost-s3/
+COPY ofthemechanges.patch /ghost/content/themes/Steam/
 
-ADD include/* /ghost/content/themes/Steam/
-ADD include/partials/* /ghost/content/themes/Steam/partials/
-ADD include/assets/* /ghost/content/themes/Steam/assets/
+COPY index.js /ghost/content/storage/ghost-s3/
+
+RUN cd /ghost/content/themes/Steam \
+    && sudo git apply -v ofthemechanges.patch
 
 # Add files.
 ADD start.bash /ghost-start
