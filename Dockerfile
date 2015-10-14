@@ -5,23 +5,25 @@ FROM tatsushid/tinycore:6.3-x86_64
 RUN tce-load -wic gnupg curl curl-dev expat2 \
     && rm -rf /tmp/tce/optional/*
 
-ENV NODE_VERSION 4.1.1
-ENV NPM_VERSION 3.3.5
-
+ENV NODE_VERSION 4.2.0
+ENV NPM_VERSION 3.3.6
 ENV LANG C.UTF-8
+
+RUN gpg2 --keyserver pool.sks-keyservers.net --recv-keys C01E1CAD5EA2C4F0B8E3571504C367C218ADD4FF
 ENV PYTHON_VERSION 2.7.10
-ENV PYTHON_PIP_VERSION 7.0.1
+
+# if this is called "PIP_VERSION", pip explodes with "ValueError: invalid truth value '<VERSION>'"
+ENV PYTHON_PIP_VERSION 7.1.2
 
 RUN tce-load -wic \
         bzip2-dev \
-        curl \
         flex \
         file \
         gcc \
         make \
         linux-3.16.2_api_headers \
         glibc_base-dev \
-        openssl-1.0.0-dev \
+        openssl-dev \
         gdbm-dev \
         ncurses-dev \
         readline-dev \
@@ -30,19 +32,12 @@ RUN tce-load -wic \
         tk-dev \
         libX11-dev \
         libXss \
-        libxft \
-        libxft-dev \
-        ftgl \
-        ftgl-dev \
-        xz \
         xorg-proto \
-        zlib_base \
-        zlib_base-dev \
-        zlib \
     && sudo ln -s /usr/local/bin/file /usr/bin/file \
     && cd /tmp \
     && curl -SL "https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tar.xz" -o python.tar.xz \
     && curl -SL "https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tar.xz.asc" -o python.tar.xz.asc \
+    && gpg2 --verify python.tar.xz.asc \
     && rm python.tar.xz.asc \
     && tar -xJf python.tar.xz \
     && rm python.tar.xz \
@@ -51,7 +46,7 @@ RUN tce-load -wic \
     && make \
     && mkdir tmp_install \
     && make install DESTDIR=tmp_install \
-    && for F in `find mp_install | xargs file | grep "executable" | grep ELF | grep "not stripped" | cut -f 1 -d :`; do \
+    && for F in `find tmp_install | xargs file | grep "executable" | grep ELF | grep "not stripped" | cut -f 1 -d :`; do \
             [ -f $F ] && strip --strip-unneeded $F; \
         done \
     && for F in `find tmp_install | xargs file | grep "shared object" | grep ELF | grep "not stripped" | cut -f 1 -d :`; do \
@@ -67,7 +62,7 @@ RUN tce-load -wic \
     && cd /tmp/tce/optional \
     && for PKG in `ls *-dev.tcz`; do \
             echo "Removing $PKG files"; \
-            for F in `unsquashfs -l $PKG | grep squashfs-root | sed - 's/squashfs-root//'`; do \
+            for F in `unsquashfs -l $PKG | grep squashfs-root | sed -e 's/squashfs-root//'`; do \
                 [ -f $F -o -L $F ] && sudo rm -f $F; \
             done; \
             INSTALLED=$(echo -n $PKG | sed -e s/.tcz//); \
@@ -82,7 +77,6 @@ RUN tce-load -wic \
                 linux-3.16.2_api_headers.tcz \
                 make.tcz \
                 sqlite3-bin.tcz \
-                xz.tcz \
                 xorg-proto.tcz; do \
             echo "Removing $PKG files"; \
             for F in `unsquashfs -l $PKG | grep squashfs-root | sed -e 's/squashfs-root//'`; do \
@@ -95,7 +89,7 @@ RUN tce-load -wic \
     && sudo /sbin/ldconfig \
     && rm -rf /tmp/tce/optional/* \
     && curl -SL 'https://bootstrap.pypa.io/get-pip.py' | sudo python2 \
-    && sudo pip install --upgrade pip==$PYTHON_PIP_VERSION \
+    && sudo pip install --no-cache-dir --upgrade pip==$PYTHON_PIP_VERSION \
     && sudo find /usr/local \( -type f -a -name '*.pyc' -o -name '*.pyo' \) -exec rm -rf '{}' + \
     && find /usr/local \( -type d -a -name test -o -name tests \) | sudo xargs rm -rf \
     && sudo rm -rf /usr/src/python
