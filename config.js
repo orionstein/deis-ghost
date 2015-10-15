@@ -46,7 +46,8 @@ config = {
         accessKeyId: process.env.GHOST_KEY,
         secretAccessKey: process.env.GHOST_SECRET,
         bucket: process.env.GHOST_BUCKET,
-        region: process.env.GHOST_REGION
+        region: process.env.GHOST_REGION,
+        assetHost: process.env.GHOST_ASSETHOST
       }
     }
   },

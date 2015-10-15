@@ -145,6 +145,8 @@ RUN cd /ghost \
     && sudo git apply -v offixbuild.patch \
     && sudo npm install \
     && sudo npm install ghost-s3-storage \
+    && sudo npm install aws-sdk \
+    && sudo npm install when \
     && sudo npm install grunt \
     && sudo mkdir -p /ghost/content/storage/ghost-s3
 

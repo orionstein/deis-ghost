@@ -1,0 +1,109 @@
+{
+  "requiresAttributes": [],
+  "taskDefinitionArn": "arn:aws:ecs:us-east-1:556993035688:task-definition/ghost-img:22",
+  "status": "ACTIVE",
+  "revision": 22,
+  "containerDefinitions": [
+    {
+      "volumesFrom": [],
+      "memory": 250,
+      "extraHosts": null,
+      "dnsServers": null,
+      "disableNetworking": null,
+      "dnsSearchDomains": null,
+      "portMappings": [
+        {
+          "hostPort": 2368,
+          "containerPort": 2368,
+          "protocol": "tcp"
+        }
+      ],
+      "hostname": null,
+      "essential": true,
+      "entryPoint": [],
+      "mountPoints": [
+        {
+          "containerPath": "/ghost-override",
+          "sourceVolume": "GhostOverrideVol",
+          "readOnly": false
+        }
+      ],
+      "name": "ghost-img",
+      "ulimits": null,
+      "dockerSecurityOptions": null,
+      "environment": [
+        {
+          "name": "SES_KEY",
+          "value": ""
+        },
+        {
+          "name": "GHOST_KEY",
+          "value": ""
+        },
+        {
+          "name": "PG_HOST",
+          "value": ""
+        },
+        {
+          "name": "PG_PASSWORD",
+          "value": ""
+        },
+        {
+          "name": "SES_HOST",
+          "value": ""
+        },
+        {
+          "name": "GHOST_BUCKET",
+          "value": ""
+        },
+        {
+          "name": "PG_USER",
+          "value": ""
+        },
+        {
+          "name": "PG_DB",
+          "value": ""
+        },
+        {
+          "name": "SES_SECRET",
+          "value": ""
+        },
+        {
+          "name": "GHOST_SECRET",
+          "value": ""
+        },
+        {
+          "name": "GHOST_URL",
+          "value": ""
+        },
+        {
+          "name": "GHOST_REGION",
+          "value": ""
+        },
+        {
+          "name": "GHOST_ASSETHOST",
+          "value": ""
+        }
+      ],
+      "links": [],
+      "workingDirectory": null,
+      "readonlyRootFilesystem": null,
+      "image": "orionstein/ghost-img:latest",
+      "command": [],
+      "user": null,
+      "dockerLabels": null,
+      "logConfiguration": null,
+      "cpu": 100,
+      "privileged": null
+    }
+  ],
+  "volumes": [
+    {
+      "host": {
+        "sourcePath": "/ecs/ghost-override"
+      },
+      "name": "GhostOverrideVol"
+    }
+  ],
+  "family": "ghost-img"
+}
