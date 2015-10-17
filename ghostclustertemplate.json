@@ -1,0 +1,331 @@
+{
+  "requiresAttributes": [],
+  "taskDefinitionArn": "arn:aws:ecs:us-east-1:556993035688:task-definition/ghost-cluster:8",
+  "status": "ACTIVE",
+  "revision": 8,
+  "containerDefinitions": [
+    {
+      "volumesFrom": [],
+      "memory": 128,
+      "extraHosts": null,
+      "dnsServers": null,
+      "disableNetworking": null,
+      "dnsSearchDomains": null,
+      "portMappings": [
+        {
+          "hostPort": 2368,
+          "containerPort": 2368,
+          "protocol": "tcp"
+        },
+        {
+          "hostPort": 80,
+          "containerPort": 80,
+          "protocol": "tcp"
+        },
+        {
+          "hostPort": 443,
+          "containerPort": 443,
+          "protocol": "tcp"
+        }
+      ],
+      "hostname": null,
+      "essential": true,
+      "entryPoint": null,
+      "mountPoints": [],
+      "name": "nginx-balancer",
+      "ulimits": null,
+      "dockerSecurityOptions": null,
+      "environment": [
+        {
+          "name": "GHOST_IMG_REMOTE_PORT",
+          "value": "2368"
+        },
+        {
+          "name": "GHOST_IMG_PATH",
+          "value": "/"
+        }
+      ],
+      "links": [
+        "ghost-img-1:ghost-img-1",
+        "ghost-img-2:ghost-img-2",
+        "ghost-img-3:ghost-img-3"
+      ],
+      "workingDirectory": null,
+      "readonlyRootFilesystem": null,
+      "image": "jasonwyatt/nginx-loadbalancer",
+      "command": null,
+      "user": null,
+      "dockerLabels": null,
+      "logConfiguration": null,
+      "cpu": 100,
+      "privileged": null
+    },
+    {
+      "volumesFrom": [],
+      "memory": 180,
+      "extraHosts": null,
+      "dnsServers": null,
+      "disableNetworking": null,
+      "dnsSearchDomains": null,
+      "portMappings": [],
+      "hostname": null,
+      "essential": true,
+      "entryPoint": [],
+      "mountPoints": [
+        {
+          "containerPath": "/ghost-override",
+          "sourceVolume": "GhostOverrideVol",
+          "readOnly": false
+        }
+      ],
+      "name": "ghost-img-1",
+      "ulimits": null,
+      "dockerSecurityOptions": null,
+      "environment": [
+        {
+          "name": "SES_KEY",
+          "value": ""
+        },
+        {
+          "name": "GHOST_KEY",
+          "value": ""
+        },
+        {
+          "name": "PG_HOST",
+          "value": ""
+        },
+        {
+          "name": "PG_PASSWORD",
+          "value": ""
+        },
+        {
+          "name": "SES_HOST",
+          "value": ""
+        },
+        {
+          "name": "GHOST_BUCKET",
+          "value": ""
+        },
+        {
+          "name": "PG_USER",
+          "value": ""
+        },
+        {
+          "name": "PG_DB",
+          "value": ""
+        },
+        {
+          "name": "SES_SECRET",
+          "value": ""
+        },
+        {
+          "name": "GHOST_SECRET",
+          "value": ""
+        },
+        {
+          "name": "GHOST_URL",
+          "value": ""
+        },
+        {
+          "name": "GHOST_REGION",
+          "value": ""
+        },
+        {
+          "name": "GHOST_ASSETHOST",
+          "value": ""
+        }
+      ],
+      "links": [],
+      "workingDirectory": null,
+      "readonlyRootFilesystem": null,
+      "image": "orionstein/ghost-img:latest",
+      "command": [],
+      "user": null,
+      "dockerLabels": null,
+      "logConfiguration": null,
+      "cpu": 100,
+      "privileged": null
+    },
+    {
+      "volumesFrom": [],
+      "memory": 180,
+      "extraHosts": null,
+      "dnsServers": null,
+      "disableNetworking": null,
+      "dnsSearchDomains": null,
+      "portMappings": [],
+      "hostname": null,
+      "essential": true,
+      "entryPoint": [],
+      "mountPoints": [
+        {
+          "containerPath": "/ghost-override",
+          "sourceVolume": "GhostOverrideVol",
+          "readOnly": false
+        }
+      ],
+      "name": "ghost-img-2",
+      "ulimits": null,
+      "dockerSecurityOptions": null,
+      "environment": [
+        {
+          "name": "SES_KEY",
+          "value": ""
+        },
+        {
+          "name": "GHOST_KEY",
+          "value": ""
+        },
+        {
+          "name": "PG_HOST",
+          "value": ""
+        },
+        {
+          "name": "PG_PASSWORD",
+          "value": ""
+        },
+        {
+          "name": "SES_HOST",
+          "value": ""
+        },
+        {
+          "name": "GHOST_BUCKET",
+          "value": ""
+        },
+        {
+          "name": "PG_USER",
+          "value": ""
+        },
+        {
+          "name": "PG_DB",
+          "value": ""
+        },
+        {
+          "name": "SES_SECRET",
+          "value": ""
+        },
+        {
+          "name": "GHOST_SECRET",
+          "value": ""
+        },
+        {
+          "name": "GHOST_URL",
+          "value": ""
+        },
+        {
+          "name": "GHOST_REGION",
+          "value": ""
+        },
+        {
+          "name": "GHOST_ASSETHOST",
+          "value": ""
+        }
+      ],
+      "links": [],
+      "workingDirectory": null,
+      "readonlyRootFilesystem": null,
+      "image": "orionstein/ghost-img:latest",
+      "command": [],
+      "user": null,
+      "dockerLabels": null,
+      "logConfiguration": null,
+      "cpu": 100,
+      "privileged": null
+    },
+    {
+      "volumesFrom": [],
+      "memory": 180,
+      "extraHosts": null,
+      "dnsServers": null,
+      "disableNetworking": null,
+      "dnsSearchDomains": null,
+      "portMappings": [],
+      "hostname": null,
+      "essential": true,
+      "entryPoint": [],
+      "mountPoints": [
+        {
+          "containerPath": "/ghost-override",
+          "sourceVolume": "GhostOverrideVol",
+          "readOnly": false
+        }
+      ],
+      "name": "ghost-img-3",
+      "ulimits": null,
+      "dockerSecurityOptions": null,
+      "environment": [
+        {
+          "name": "SES_KEY",
+          "value": ""
+        },
+        {
+          "name": "GHOST_KEY",
+          "value": ""
+        },
+        {
+          "name": "PG_HOST",
+          "value": ""
+        },
+        {
+          "name": "PG_PASSWORD",
+          "value": ""
+        },
+        {
+          "name": "SES_HOST",
+          "value": ""
+        },
+        {
+          "name": "GHOST_BUCKET",
+          "value": ""
+        },
+        {
+          "name": "PG_USER",
+          "value": ""
+        },
+        {
+          "name": "PG_DB",
+          "value": ""
+        },
+        {
+          "name": "SES_SECRET",
+          "value": ""
+        },
+        {
+          "name": "GHOST_SECRET",
+          "value": ""
+        },
+        {
+          "name": "GHOST_URL",
+          "value": ""
+        },
+        {
+          "name": "GHOST_REGION",
+          "value": ""
+        },
+        {
+          "name": "GHOST_ASSETHOST",
+          "value": ""
+        }
+      ],
+      "links": [],
+      "workingDirectory": null,
+      "readonlyRootFilesystem": null,
+      "image": "orionstein/ghost-img:latest",
+      "command": [],
+      "user": null,
+      "dockerLabels": null,
+      "logConfiguration": null,
+      "cpu": 100,
+      "privileged": null
+    }
+  ],
+  "volumes": [
+    {
+      "host": {
+        "sourcePath": "/ecs/ghost-override"
+      },
+      "name": "GhostOverrideVol"
+    }
+  ],
+  "family": "ghost-cluster"
+}
